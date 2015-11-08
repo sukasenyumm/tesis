@@ -64,9 +64,11 @@ namespace Tugas
             //set the screen size
             graphics.PreferredBackBufferHeight = 700;
             graphics.PreferredBackBufferWidth = 900;
+           
 
             //positions the top left corner of the board - change this to move the board
-            _boardPosition = new Vector2(100, 75);
+            //_boardPosition = new Vector2(100, 75);
+            _boardPosition = new Vector2(0, 0);
 
             _boardPositionTiny = new Vector2(graphics.PreferredBackBufferHeight, 300);
 
@@ -210,8 +212,8 @@ namespace Tugas
                 {
                     if (f.isActive)
                     {
-                        xObj = f.g_X * graphics.PreferredBackBufferWidth;
-                        yObj = f.g_Y * graphics.PreferredBackBufferHeight;
+                        xObj = f.g_X * 27*12; //graphics.PreferredBackBufferWidth;
+                        yObj = f.g_Y * 27 * 12; // graphics.PreferredBackBufferHeight;
                         finger.Position.X = (int)xObj;
                         finger.Position.Y = (int)yObj;
 
@@ -312,24 +314,26 @@ namespace Tugas
 
                         //find out which square the mouse is over
                         Vector3 tile = new Vector3(GetSquareFromCurrentMousePosition(), 0);
+                        leapDownPosition = new Vector2((int)xObj, (int)yObj);
+                        if (f.numHand == true)
+                        {
+
+                            for (int i = 0; i < 28; i++)
+                                for (int j = 0; j < 28; j++)
+                                    _board[i, j] = false;
+
+                            for (int i = 0; i < objectVector.Length; ++i)
+                                objectVector[i] = 0.0d;
+                        }
+
 
                         if (f.g_Z < 0)
                         {
                             indicator = 150 - f.g_Z;
+                            Console.WriteLine(indicator);
                             if (indicator > 50)
                             {
-                                leapDownPosition = new Vector2((int)xObj, (int)yObj);
-                                if (f.numHand == true)
-                                {
-
-                                    for (int i = 0; i < 28; i++)
-                                        for (int j = 0; j < 28; j++)
-                                            _board[i, j] = false;
-
-                                    for (int i = 0; i < objectVector.Length;++i )
-                                        objectVector[i] = 0.0d;
-                                }
-                                else
+                               
                                 {
                                     //if the mousebutton was released inside the board
                                     if (IsMouseInsideBoard())
@@ -414,7 +418,7 @@ namespace Tugas
                                             _board[(int)tile.X - 1, (int)tile.Y + 1] = true;
                                         }
 
-                                        Console.WriteLine("{0},{1}", (int)tile.X, (int)tile.Y);
+                                        //Console.WriteLine("{0},{1}", (int)tile.X, (int)tile.Y);
                                         int count = 0;
                                         for (int i = 0; i < 28; i++)
                                         {
@@ -435,7 +439,7 @@ namespace Tugas
                                                         objectVector[count + 1] = 1.0d;
                                                         objectVector[count + 28] = 1.0d;
                                                         objectVector[count + 29] = 1.0d;
-                                                        Console.WriteLine("count {0}" + count);
+                                                        //Console.WriteLine("count {0}" + count);
                                                     }
                                                     else if (count > 755 && count <= 783)
                                                     {
@@ -467,7 +471,7 @@ namespace Tugas
                                                         objectVector[count - 1] = 1.0d;
                                                         objectVector[count + 27] = 1.0d;
                                                         objectVector[count + 28] = 1.0d;
-                                                        Console.WriteLine("count {0}" + count);
+                                                       // Console.WriteLine("count {0}" + count);
                                                     }
                                                     else if(count == 783)
                                                     {
@@ -645,14 +649,17 @@ namespace Tugas
                         colorToUse = Color.White;
                     }
 
-                    //draw the white square at the given position, offset by the x- and y-offset, in the opacity desired
-                    spriteBatch.Draw(_whiteSquare, squareToDrawPosition, colorToUse * opacity);
-
+                  
                     //if the square has a tile - draw it
                     if (_board[x, y])
                     {
                         spriteBatch.Draw(_whiteSquare, squareToDrawPosition, Color.Black);
+                        colorToUse = Color.Yellow;
                     }
+
+                    //draw the white square at the given position, offset by the x- and y-offset, in the opacity desired
+                    spriteBatch.Draw(_whiteSquare, squareToDrawPosition, colorToUse * opacity);
+
                     
                 }
 
