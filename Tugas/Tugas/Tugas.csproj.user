@@ -13,4 +13,7 @@
   <PropertyGroup>
     <ReferencePath>D:\KULIAH_S2\AI\Program\Tugas\Tugas\Tugas\lib\</ReferencePath>
   </PropertyGroup>
+  <PropertyGroup>
+    <EnableSecurityDebugging>false</EnableSecurityDebugging>
+  </PropertyGroup>
 </Project>

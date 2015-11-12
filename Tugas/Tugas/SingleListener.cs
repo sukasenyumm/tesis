@@ -63,8 +63,9 @@ namespace Tugas
                         {
                             float xScreenIntersect = (float)screen.Intersect(finger, true).x;
                             float yScreenIntersect = (float)(1 - screen.Intersect(finger, true).y);
-                            float zScreenIntersect = finger.TipPosition.z;
-                            
+                            //float zScreenIntersect = finger.TipPosition.z;
+                            float zScreenIntersect = screen.DistanceToPoint(finger.TipPosition);
+
                             if (xScreenIntersect.ToString() != "NaN")
                             {
                                 //var x = (int)(xScreenIntersect * screen.WidthPixels);
